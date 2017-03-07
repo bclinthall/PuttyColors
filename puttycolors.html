@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Putty Colors</title>
+    <style>
+        .swatch{
+           display: inline-block;
+           height: 50px;
+           width: 50px;
+           vertical-align: middle;
+           border: 1px solid black;
+           margin: 5px;
+        }
+        .num{
+            display: inline-block;
+            width: 30px;
+        }
+        input[data-color]{
+            width: 50px;
+        }
+        
+    </style>
+    <script src="appstudentcolors.js" charset="utf-8"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript">
+      var colors = ['red','green','blue'];
+      function makePalette(colorArray){
+        var div = $("<div>");
+        div.appendTo("body");
+        for(var i=0; i<colorArray.length; i++){
+          var row = $("<div>").addClass("row");
+          row.appendTo(div);
+          $("<span>").addClass("num").text(21-i).appendTo(row);
+          for(var j=0; j<3; j++){
+            $("<input>")
+                .val(colorArray[i][j])
+                .attr("data-color",colors[j])
+                .appendTo(row);
+          }
+          $("<span>").addClass("swatch").appendTo(row);
+          showSwatch(row);
+        }
+      }
+      function showSwatch(el){
+          var row = $(el.closest(".row"));
+          row.find(".swatch").css("background-color", "rgb("
+              + row.find("[data-color=red]").val() + ","
+              + row.find("[data-color=green]").val() + ","
+              + row.find("[data-color=blue]").val() + ")"
+          )
+              
+      }
+      $(function(){
+          $("body").on("input", "[data-color]", function(){
+              showSwatch(this);
+          });
+          makePalette(appstudentcolors);
+      });
+              
+              
+    </script>
+  </head>
+  <body>
+
+  </body>
+</html>
